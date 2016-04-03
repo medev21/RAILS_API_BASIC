@@ -1,5 +1,10 @@
-class Api::TodoListsController < ApplicationController
-	skip_before_filter :verify_authenticity_token
+class Api::TodoListsController < Api::ApiController
+#the todolistcontroller inherits from apicontroller which
+#contains the skip_before_filter :verify_authenticity_token
+#
+#
+# class Api::TodoListsController < ApplicationController
+	# skip_before_filter :verify_authenticity_token
 	def index
     render json: TodoList.all
   end
