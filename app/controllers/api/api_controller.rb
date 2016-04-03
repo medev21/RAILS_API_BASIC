@@ -5,8 +5,16 @@ module Api
     before_filter :authenticate
 
     def authenticate
-      authenticate_or_request_with_http_basic do |user, password|
-        user == "phil" && password == "catspaw"
+      authenticate_or_request_with_http_basic do |email, password|
+        Rails.logger.info "API authentication:#{email} #{{password}}"
+        user = User.find_by(email: email)
+        if user && user.authenticate(password)
+          Rails.logger.info "logging in #{user.inspect}"
+          true
+        else
+          Rails.logger.warn "No valid credentials"
+          false
+        end
       end
     end
   end
